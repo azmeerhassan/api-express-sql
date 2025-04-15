@@ -13,5 +13,23 @@ async function getNotes(){
     const [rows] = await pool.query('SELECT * FROM notes')
     return rows
 }
-const notes = await getNotes()
-console.log(notes)
+
+async function getNote(id){
+    const [rows] = await pool.query(`
+        SELECT * FROM notes
+         WHERE id = ?`, 
+         [id])
+         
+    return rows[0]
+}
+
+async function createNote(title, content) {
+    const [result] = await pool.query(`
+        INSERT INTO notes (title, contents)
+        VALUES(?, ?)
+        `,[title, content])
+        const id = result.insertId
+       return getNote(id)
+}
+
+
