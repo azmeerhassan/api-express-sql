@@ -9,12 +9,12 @@ const pool = mysql.createPool({
     database: process.env.MYSQL_DATABASE,
 }).promise()
 
-async function getNotes(){
+export async function getNotes(){
     const [rows] = await pool.query('SELECT * FROM notes')
     return rows
 }
 
-async function getNote(id){
+export async function getNote(id){
     const [rows] = await pool.query(`
         SELECT * FROM notes
          WHERE id = ?`, 
